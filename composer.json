@@ -1,0 +1,16 @@
+{
+    "name": "gnoesiboe/value-objects",
+    "description": "Library containing useful value objects",
+    "authors": [
+        {
+            "name": "Gijs Nieuwenhuis",
+            "email": "gijsnieuwenhuis@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}
