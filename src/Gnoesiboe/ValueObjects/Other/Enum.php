@@ -3,13 +3,13 @@
 namespace Gnoesiboe\ValueObjects\Other;
 
 use Gnoesiboe\ValueObjects\Exception\DomainException;
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Enum
  */
-class Enum extends ValueObject implements ValueObjectInterface
+class Enum extends SingleValueObject implements ValueObjectInterface
 {
 
     /**
@@ -47,7 +47,7 @@ class Enum extends ValueObject implements ValueObjectInterface
      *
      * @throws DomainException
      */
-    protected function validateValue($value)
+    private function validateValue($value)
     {
         $supported = array_values(self::extractConstants(get_called_class()));
 
@@ -125,15 +125,5 @@ class Enum extends ValueObject implements ValueObjectInterface
     public function __toString()
     {
         return (string)$this->getValue();
-    }
-
-    /**
-     * @param mixed $identifier
-     *
-     * @return static
-     */
-    public static function create($identifier)
-    {
-        return new static($identifier);
     }
 }

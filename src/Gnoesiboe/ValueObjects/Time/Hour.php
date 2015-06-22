@@ -2,19 +2,19 @@
 
 namespace Gnoesiboe\ValueObjects\Time;
 
-use Gnoesiboe\ValueObjects\Exception\DomainException;
 use Gnoesiboe\ValueObjects\Numerical\Integer;
+use Gnoesiboe\ValueObjects\Exception\DomainException;
 use Gnoesiboe\ValueObjects\SingleValueObject;
 use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
- * Class Seconds
+ * Class Hour
  */
-final class Seconds extends SingleValueObject implements ValueObjectInterface
+final class Hour extends SingleValueObject implements ValueObjectInterface
 {
 
     /** @var int */
-    const MAX_VALUE = 59;
+    const MAX_VALUE = 23;
 
     /** @var int */
     const MIN_VALUE = 0;
@@ -50,7 +50,7 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
      */
     private function validateValue(Integer $value)
     {
-        $this->validateIsSeconds($value);
+        $this->validateIsHours($value);
     }
 
     /**
@@ -58,7 +58,7 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
      *
      * @throws DomainException
      */
-    private function validateIsSeconds(Integer $value)
+    private function validateIsHours(Integer $value)
     {
         $this->throwDomainExceptionIf(
             $value->isLessThan(new Integer(self::MIN_VALUE)) || $value->isBiggerThan(new Integer(self::MAX_VALUE)),
@@ -75,13 +75,13 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Seconds $seconds
+     * @param Hour $hours
      *
      * @return bool
      */
-    public function isEqualTo(Seconds $seconds)
+    public function isEqualTo(Hour $hours)
     {
-        return $seconds->getValue()->isEqualTo($this->getValue());
+        return $hours->getValue()->isEqualTo($this->getValue());
     }
 
     /**
@@ -93,12 +93,12 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Seconds $start
-     * @param Seconds $end
+     * @param Hour $start
+     * @param Hour $end
      *
      * @return bool
      */
-    public function isBetween(Seconds $start, Seconds $end)
+    public function isBetween(Hour $start, Hour $end)
     {
         if ($this->isEqualTo($start) === true || $this->isEqualTo($end) === true) {
             return true;
@@ -108,22 +108,22 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Seconds $seconds
+     * @param Hour $hours
      *
      * @return bool
      */
-    public function isLaterThan(Seconds $seconds)
+    public function isLaterThan(Hour $hours)
     {
-        return $this->getValue()->isBiggerThan($seconds->getValue());
+        return $this->getValue()->isBiggerThan($hours->getValue());
     }
 
     /**
-     * @param Seconds $seconds
+     * @param Hour $hours
      *
      * @return bool
      */
-    public function isEarlierThan(Seconds $seconds)
+    public function isEarlierThan(Hour $hours)
     {
-        return $this->getValue()->isLessThan($seconds->getValue());
+        return $this->getValue()->isLessThan($hours->getValue());
     }
 }

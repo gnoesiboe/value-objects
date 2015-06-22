@@ -2,64 +2,56 @@
 
 namespace Gnoesiboe\ValueObjects\Time;
 
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\Numerical\Integer;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Year
  */
-class Year extends ValueObject implements ValueObjectInterface
+class Year extends SingleValueObject implements ValueObjectInterface
 {
 
     /** @var int */
     const MIN_VALUE = 0;
 
     /**
-     * @varint
+     * @var \Gnoesiboe\ValueObjects\Numerical\Integer
      */
     private $value;
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    public function __construct($value)
+    public function __construct(Integer $value)
     {
         $this->setValue($value);
     }
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    private function setValue($value)
+    private function setValue(Integer $value)
     {
         $this->validateValue($value);
 
-        $this->value = (int)$value;
+        $this->value = $value;
     }
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    protected function validateValue($value)
+    private function validateValue(Integer $value)
     {
-        $this->validateIsInteger($value);
         $this->validateIsYear($value);
     }
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    private function validateIsInteger($value)
+    private function validateIsYear(Integer $value)
     {
-        $this->throwDomainExceptionIf(filter_var($value, FILTER_VALIDATE_INT) === false, 'Value should be of type int');
-    }
-
-    /**
-     * @param int $value
-     */
-    private function validateIsYear($value)
-    {
-        $this->throwDomainExceptionUnless($value >= self::MIN_VALUE, 'The supplied value is an unvalid year');
+        $this->throwDomainExceptionUnless($value->isBiggerThanOrEqualTo(new Integer(self::MIN_VALUE)), 'The supplied value is an unvalid year');
     }
 
     /**
@@ -69,7 +61,7 @@ class Year extends ValueObject implements ValueObjectInterface
      */
     public function isLaterThan(Year $year)
     {
-        return $this->getValue() > $year->getValue();
+        return $this->getValue()->isBiggerThan($year->getValue());
     }
 
     /**
@@ -89,7 +81,7 @@ class Year extends ValueObject implements ValueObjectInterface
      */
     public function isEqualTo(Year $year)
     {
-        return $this->getValue() === $year->getValue();
+        return $this->getValue()->isEqualTo($year->getValue());
     }
 
     /**
@@ -99,7 +91,7 @@ class Year extends ValueObject implements ValueObjectInterface
      */
     public function isEarlierThan(Year $year)
     {
-        return $this->getValue() < $year->getValue();
+        return $this->getValue()->isLessThan($year->getValue());
     }
 
     /**
@@ -113,7 +105,7 @@ class Year extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @return int
+     * @return \Gnoesiboe\ValueObjects\Numerical\Integer
      */
     public function getValue()
     {
@@ -125,6 +117,6 @@ class Year extends ValueObject implements ValueObjectInterface
      */
     public function __toString()
     {
-        return (string)$this->getValue();
+        return $this->getValue()->__toString();
     }
 }

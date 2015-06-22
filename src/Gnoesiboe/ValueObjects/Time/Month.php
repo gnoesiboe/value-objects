@@ -2,13 +2,14 @@
 
 namespace Gnoesiboe\ValueObjects\Time;
 
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\Numerical\Integer;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Month
  */
-class Month extends ValueObject implements ValueObjectInterface
+final class Month extends SingleValueObject implements ValueObjectInterface
 {
 
     /** @var int */
@@ -17,53 +18,46 @@ class Month extends ValueObject implements ValueObjectInterface
     /** @var int */
     const MAX_VALUE = 12;
 
-
     /**
-     * @varint
+     * @var \Gnoesiboe\ValueObjects\Numerical\Integer
      */
     private $value;
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    public function __construct($value)
+    public function __construct(Integer $value)
     {
         $this->setValue($value);
     }
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    private function setValue($value)
+    private function setValue(Integer $value)
     {
         $this->validateValue($value);
 
-        $this->value = (int)$value;
+        $this->value = $value;
     }
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    protected function validateValue($value)
+    private function validateValue(Integer $value)
     {
-        $this->validateIsInteger($value);
         $this->validateIsMonth($value);
     }
 
     /**
-     * @param int $value
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $value
      */
-    private function validateIsInteger($value)
+    private function validateIsMonth(Integer $value)
     {
-        $this->throwDomainExceptionIf(filter_var($value, FILTER_VALIDATE_INT) === false, 'Value should be of type int');
-    }
-
-    /**
-     * @param int $value
-     */
-    private function validateIsMonth($value)
-    {
-        $this->throwDomainExceptionUnless($value < self::MIN_VALUE || $value > self::MAX_VALUE, 'The supplied value is an unvalid month');
+        $this->throwDomainExceptionUnless(
+            $value->isLessThan(new Integer(self::MIN_VALUE)) || $value->isBiggerThan(new Integer(self::MAX_VALUE)),
+            'The supplied value is an unvalid month'
+        );
     }
 
     /**
@@ -73,7 +67,7 @@ class Month extends ValueObject implements ValueObjectInterface
      */
     public function isLaterThan(Month $month)
     {
-        return $this->getValue() > $month->getValue();
+        return $this->getValue()->isBiggerThan($month->getValue());
     }
 
     /**
@@ -93,7 +87,7 @@ class Month extends ValueObject implements ValueObjectInterface
      */
     public function isEqualTo(Month $month)
     {
-        return $this->getValue() === $month->getValue();
+        return $this->getValue()->isEqualTo($month->getValue());
     }
 
     /**
@@ -103,7 +97,7 @@ class Month extends ValueObject implements ValueObjectInterface
      */
     public function isEarlierThan(Month $month)
     {
-        return $this->getValue() < $month->getValue();
+        return $this->getValue()->isLessThan($month->getValue());
     }
 
     /**
@@ -117,7 +111,7 @@ class Month extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @return int
+     * @return \Gnoesiboe\ValueObjects\Numerical\Integer
      */
     public function getValue()
     {
@@ -129,6 +123,6 @@ class Month extends ValueObject implements ValueObjectInterface
      */
     public function __toString()
     {
-        return (string)$this->value;
+        return $this->value->__toString();
     }
 }

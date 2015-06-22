@@ -1,6 +1,6 @@
 <?php
 
-namespace Gnoesiboe\ValueObjects;
+namespace Gnoesiboe\ValueObjects\Contract;
 
 /**
  * Interface ValueObjectInterface

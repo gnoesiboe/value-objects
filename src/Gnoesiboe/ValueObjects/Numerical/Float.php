@@ -1,15 +1,15 @@
 <?php
 
-namespace Gnoesiboe\ValueObjects\Numeric;
+namespace Gnoesiboe\ValueObjects\Numerical;
 
 use Gnoesiboe\ValueObjects\Exception\DomainException;
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Float
  */
-final class Float extends ValueObject implements ValueObjectInterface
+final class Float extends SingleValueObject implements ValueObjectInterface
 {
 
     /** @var int */
@@ -49,7 +49,7 @@ final class Float extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Float $float
+     * @param \Gnoesiboe\ValueObjects\Numerical\Float $float
      * @param int $depth
      *
      * @return bool
@@ -60,7 +60,7 @@ final class Float extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Float $float
+     * @param \Gnoesiboe\ValueObjects\Numerical\Float $float
      *
      * @return bool
      */
@@ -70,7 +70,7 @@ final class Float extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Float $float
+     * @param \Gnoesiboe\ValueObjects\Numerical\Float $float
      * @param int $depth
      *
      * @return bool
@@ -81,7 +81,7 @@ final class Float extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Float $float
+     * @param \Gnoesiboe\ValueObjects\Numerical\Float $float
      *
      * @return bool
      */
@@ -91,7 +91,7 @@ final class Float extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Float $float
+     * @param \Gnoesiboe\ValueObjects\Numerical\Float $float
      * @param $depth
      *
      * @return bool

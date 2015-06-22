@@ -2,22 +2,22 @@
 
 namespace Gnoesiboe\ValueObjects\Time;
 
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Time
  */
-class Time extends ValueObject implements ValueObjectInterface
+class Time extends SingleValueObject implements ValueObjectInterface
 {
 
     /**
-     * @var Hours
+     * @var Hour
      */
     private $hours;
 
     /**
-     * @var Minutes
+     * @var Minute
      */
     private $minutes;
 
@@ -27,11 +27,11 @@ class Time extends ValueObject implements ValueObjectInterface
     private $seconds;
 
     /**
-     * @param Hours $hours
-     * @param Minutes $minutes
+     * @param Hour $hours
+     * @param Minute $minutes
      * @param Seconds $seconds
      */
-    public function __construct(Hours $hours, Minutes $minutes, Seconds $seconds)
+    public function __construct(Hour $hours, Minute $minutes, Seconds $seconds)
     {
         $this->hours = $hours;
         $this->minutes = $minutes;
@@ -52,7 +52,7 @@ class Time extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @return Hours
+     * @return Hour
      */
     public function getHours()
     {
@@ -60,7 +60,7 @@ class Time extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @return Minutes
+     * @return Minute
      */
     public function getMinutes()
     {
@@ -184,7 +184,7 @@ class Time extends ValueObject implements ValueObjectInterface
      */
     public static function fromValues($hours, $minutes, $seconds)
     {
-        return new static(new Hours($hours), new Minutes($minutes), new Seconds($seconds));
+        return new static(new Hour($hours), new Minute($minutes), new Seconds($seconds));
     }
 
     /**

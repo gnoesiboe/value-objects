@@ -2,61 +2,56 @@
 
 namespace Gnoesiboe\ValueObjects\Web;
 
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\String\String;
 
 /**
  * Class EmailAddress
  */
-final class EmailAddress extends ValueObject implements ValueObjectInterface
+final class EmailAddress extends SingleValueObject implements ValueObjectInterface
 {
 
     /**
-     * @var string
+     * @var \Gnoesiboe\ValueObjects\String\String
      */
     private $value;
 
     /**
-     * @param string $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      */
-    public function __construct($value)
+    public function __construct(String $value)
     {
         $this->setValue($value);
     }
 
     /**
-     * @param string $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      */
-    private function setValue($value)
+    private function setValue(String $value)
     {
         $this->validateValue($value);
 
-        $this->value = (string)$value;
+        $this->value = $value;
     }
 
     /**
-     * @param string $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      */
-    private function validateValue($value)
+    private function validateValue(String $value)
     {
-        $this->validateIsString($value);
         $this->validateIsEmail($value);
     }
 
     /**
-     * @param string $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      */
-    private function validateIsString($value)
+    private function validateIsEmail(String $value)
     {
-        $this->throwDomainExceptionUnless(is_string($value) === true, 'Value should be of type string');
-    }
-
-    /**
-     * @param string $value
-     */
-    private function validateIsEmail($value)
-    {
-        $this->throwDomainExceptionIf(filter_var($value, FILTER_VALIDATE_EMAIL) === false, 'Value should be a valid email address');
+        $this->throwDomainExceptionIf(
+            filter_var($value->getValue(), FILTER_VALIDATE_EMAIL) === false,
+            'Value should be a valid email address'
+        );
     }
 
     /**
@@ -64,11 +59,11 @@ final class EmailAddress extends ValueObject implements ValueObjectInterface
      */
     public function __toString()
     {
-        return $this->value;
+        return $this->value->__toString();
     }
 
     /**
-     * @return string
+     * @return \Gnoesiboe\ValueObjects\String\String
      */
     public function getValue()
     {
@@ -82,6 +77,6 @@ final class EmailAddress extends ValueObject implements ValueObjectInterface
      */
     public function isEqualTo(EmailAddress $emailAddress)
     {
-        return $this->getValue() === $emailAddress->getValue();
+        return $this->getValue()->isEqualTo($emailAddress->getValue());
     }
 }

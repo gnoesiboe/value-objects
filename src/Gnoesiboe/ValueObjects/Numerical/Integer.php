@@ -1,15 +1,15 @@
 <?php
 
-namespace Gnoesiboe\ValueObjects\Numeric;
+namespace Gnoesiboe\ValueObjects\Numerical;
 
 use Gnoesiboe\ValueObjects\Exception\DomainException;
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Integer
  */
-class Integer extends ValueObject implements ValueObjectInterface
+final class Integer extends SingleValueObject implements ValueObjectInterface
 {
 
     /**
@@ -42,15 +42,16 @@ class Integer extends ValueObject implements ValueObjectInterface
      *
      * @throws DomainException
      */
-    protected function validateValue($value)
+    private function validateValue($value)
     {
-        if (filter_var($value, FILTER_VALIDATE_INT) === false) {
-            throw new DomainException('Value should be of type int');
-        }
+        $this->throwDomainExceptionIf(
+            filter_var($value, FILTER_VALIDATE_INT) === false,
+            'Value should be of type int'
+        );
     }
 
     /**
-     * @param Integer $integer
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $integer
      *
      * @return bool
      */
@@ -60,7 +61,7 @@ class Integer extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Integer $integer
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $integer
      *
      * @return bool
      */
@@ -70,7 +71,7 @@ class Integer extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Integer $integer
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $integer
      *
      * @return bool
      */
@@ -80,7 +81,7 @@ class Integer extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Integer $integer
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $integer
      *
      * @return bool
      */
@@ -90,7 +91,7 @@ class Integer extends ValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Integer $integer
+     * @param \Gnoesiboe\ValueObjects\Numerical\Integer $integer
      *
      * @return bool
      */
@@ -105,5 +106,13 @@ class Integer extends ValueObject implements ValueObjectInterface
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getValue();
     }
 }

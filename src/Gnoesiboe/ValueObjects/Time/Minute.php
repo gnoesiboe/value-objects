@@ -8,9 +8,9 @@ use Gnoesiboe\ValueObjects\SingleValueObject;
 use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
- * Class Seconds
+ * Class Minute
  */
-final class Seconds extends SingleValueObject implements ValueObjectInterface
+final class Minute extends SingleValueObject implements ValueObjectInterface
 {
 
     /** @var int */
@@ -50,7 +50,7 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
      */
     private function validateValue(Integer $value)
     {
-        $this->validateIsSeconds($value);
+        $this->validateIsMinutes($value);
     }
 
     /**
@@ -58,7 +58,7 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
      *
      * @throws DomainException
      */
-    private function validateIsSeconds(Integer $value)
+    private function validateIsMinutes(Integer $value)
     {
         $this->throwDomainExceptionIf(
             $value->isLessThan(new Integer(self::MIN_VALUE)) || $value->isBiggerThan(new Integer(self::MAX_VALUE)),
@@ -75,13 +75,14 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Seconds $seconds
+     * @param Minute $minutes
      *
      * @return bool
+     *
      */
-    public function isEqualTo(Seconds $seconds)
+    public function isEqualTo(Minute $minutes)
     {
-        return $seconds->getValue()->isEqualTo($this->getValue());
+        return $minutes->getValue()->isEqualTo($this->getValue());
     }
 
     /**
@@ -93,12 +94,12 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Seconds $start
-     * @param Seconds $end
+     * @param Minute $start
+     * @param Minute $end
      *
      * @return bool
      */
-    public function isBetween(Seconds $start, Seconds $end)
+    public function isBetween(Minute $start, Minute $end)
     {
         if ($this->isEqualTo($start) === true || $this->isEqualTo($end) === true) {
             return true;
@@ -108,22 +109,22 @@ final class Seconds extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param Seconds $seconds
+     * @param Minute $minutes
      *
      * @return bool
      */
-    public function isLaterThan(Seconds $seconds)
+    public function isLaterThan(Minute $minutes)
     {
-        return $this->getValue()->isBiggerThan($seconds->getValue());
+        return $this->getValue()->isBiggerThan($minutes->getValue());
     }
 
     /**
-     * @param Seconds $seconds
+     * @param Minute $minutes
      *
      * @return bool
      */
-    public function isEarlierThan(Seconds $seconds)
+    public function isEarlierThan(Minute $minutes)
     {
-        return $this->getValue()->isLessThan($seconds->getValue());
+        return $this->getValue()->isLessThan($minutes->getValue());
     }
 }

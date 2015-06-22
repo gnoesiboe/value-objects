@@ -2,13 +2,13 @@
 
 namespace Gnoesiboe\ValueObjects\Time;
 
-use Gnoesiboe\ValueObjects\ValueObject;
-use Gnoesiboe\ValueObjects\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\SingleValueObject;
+use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 
 /**
  * Class Date
  */
-final class Date extends ValueObject implements ValueObjectInterface
+final class Date extends SingleValueObject implements ValueObjectInterface
 {
     /**
      * @var Year
