@@ -16,7 +16,7 @@ final class UUID extends SingleValueObject implements ValueObjectInterface, Gene
 {
 
     /**
-     * @var string
+     * @var \Gnoesiboe\ValueObjects\String\String
      */
     private $value;
 
@@ -55,11 +55,11 @@ final class UUID extends SingleValueObject implements ValueObjectInterface, Gene
      */
     public static function generate()
     {
-        return static::create(new String(BaseUuid::uuid4()));
+        return static::create(new String(BaseUuid::uuid4()->toString()));
     }
 
     /**
-     * @return String
+     * @return \Gnoesiboe\ValueObjects\String\String
      */
     public function getValue()
     {

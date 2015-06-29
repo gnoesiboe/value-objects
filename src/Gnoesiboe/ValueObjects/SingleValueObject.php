@@ -20,7 +20,7 @@ abstract class SingleValueObject implements CreatableInterface
     protected function throwDomainExceptionUnless($condition, $message = null)
     {
         if ((bool)$condition === false) {
-            throw new DomainException($message);
+            throw $this->createDomainException($message);
         }
     }
 
@@ -33,8 +33,18 @@ abstract class SingleValueObject implements CreatableInterface
     protected function throwDomainExceptionIf($condition, $message = null)
     {
         if ((bool)$condition === true) {
-            throw new DomainException($message);
+            throw $this->createDomainException($message);
         }
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return DomainException
+     */
+    protected function createDomainException($message)
+    {
+        return new DomainException($message);
     }
 
     /**
