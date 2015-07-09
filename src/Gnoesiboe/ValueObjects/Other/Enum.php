@@ -9,7 +9,7 @@ use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
 /**
  * Class Enum
  */
-class Enum extends SingleValueObject implements ValueObjectInterface
+abstract class Enum extends SingleValueObject implements ValueObjectInterface
 {
 
     /**
