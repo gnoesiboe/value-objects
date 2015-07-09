@@ -54,7 +54,7 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      *
      * @return bool
      */
-    public function is(Float $float, $depth = 3)
+    public function isEqualTo(Float $float, $depth = 3)
     {
         return number_format($float->getValue(), $depth) === number_format($this->getValue(), $depth);
     }
@@ -77,7 +77,7 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      */
     public function isEqualToOrLargerThan(Float $float, $depth)
     {
-        return $this->is($float, $depth) || $this->isLargerThan($float);
+        return $this->isEqualTo($float, $depth) || $this->isLargerThan($float);
     }
 
     /**
@@ -98,7 +98,7 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      */
     public function isEqualToOrLowerThan(Float $float, $depth)
     {
-        return $this->is($float, $depth) || $this->isLowerThan($float);
+        return $this->isEqualTo($float, $depth) || $this->isLowerThan($float);
     }
 
     /**
