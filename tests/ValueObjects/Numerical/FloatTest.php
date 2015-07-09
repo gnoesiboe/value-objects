@@ -39,4 +39,31 @@ final class FloatTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($float1->isEqualTo($float2));
         $this->assertTrue($float2->isEqualTo($float1));
     }
+
+    public function testIsEqualToReturnsFalseIfTwoDifferentFloatsAreCompared()
+    {
+        $float1 = new Float(1.3);
+        $float2 = new Float(4.5);
+
+        $this->assertFalse($float1->isEqualTo($float2));
+        $this->assertFalse($float2->isEqualTo($float1));
+    }
+
+    public function testIsBiggerThanReturnsTrueIfTheTestedIntegerIsBiggerThanTheOneComparedAgainst()
+    {
+        $tested = new Float(1.0);
+        $compared = new Float(0.2);
+
+        $this->assertTrue($tested->isBiggerThan($compared));
+    }
+
+    public function testIsBiggerThanReturnsFalseIfTheTestedIntegerIsNotBiggerThanTheOneComparedAgainst()
+    {
+        $tested = new Float(1.0);
+        $equal = clone $tested;
+        $bigger = new Float(2.2);
+
+        $this->assertFalse($tested->isBiggerThan($equal));
+        $this->assertFalse($tested->isBiggerThan($bigger));
+    }
 }

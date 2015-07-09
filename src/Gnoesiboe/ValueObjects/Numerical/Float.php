@@ -64,7 +64,7 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      *
      * @return bool
      */
-    public function isLargerThan(Float $float)
+    public function isBiggerThan(Float $float)
     {
         return $this->getValue() > $float->getValue();
     }
@@ -75,9 +75,9 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      *
      * @return bool
      */
-    public function isEqualToOrLargerThan(Float $float, $depth)
+    public function isEqualToOrBiggerThan(Float $float, $depth)
     {
-        return $this->isEqualTo($float, $depth) || $this->isLargerThan($float);
+        return $this->isEqualTo($float, $depth) || $this->isBiggerThan($float);
     }
 
     /**
@@ -85,7 +85,7 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      *
      * @return bool
      */
-    public function isLowerThan(Float $float)
+    public function isLessThan(Float $float)
     {
         return $this->getValue() < $float->getValue();
     }
@@ -96,9 +96,9 @@ final class Float extends SingleValueObject implements ValueObjectInterface
      *
      * @return bool
      */
-    public function isEqualToOrLowerThan(Float $float, $depth)
+    public function isEqualToOrLessThan(Float $float, $depth)
     {
-        return $this->isEqualTo($float, $depth) || $this->isLowerThan($float);
+        return $this->isEqualTo($float, $depth) || $this->isLessThan($float);
     }
 
     /**
