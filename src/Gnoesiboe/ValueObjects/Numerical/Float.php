@@ -35,7 +35,7 @@ final class Float extends SingleValueObject implements ValueObjectInterface
     {
         $this->validateValueIsFloat($value);
 
-        $this->value = $value;
+        $this->value = (float)$value;
     }
 
     /**
