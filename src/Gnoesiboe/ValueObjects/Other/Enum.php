@@ -3,8 +3,10 @@
 namespace Gnoesiboe\ValueObjects\Other;
 
 use Gnoesiboe\ValueObjects\Exception\DomainException;
+use Gnoesiboe\ValueObjects\Numerical\Integer;
 use Gnoesiboe\ValueObjects\SingleValueObject;
 use Gnoesiboe\ValueObjects\Contract\ValueObjectInterface;
+use Gnoesiboe\ValueObjects\String\String;
 
 /**
  * Class Enum
@@ -13,7 +15,7 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
 {
 
     /**
-     * @var mixed
+     * @var \Gnoesiboe\ValueObjects\String\String
      */
     private $value;
 
@@ -23,19 +25,19 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
     private static $constants = array();
 
     /**
-     * @param mixed $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      */
-    public function __construct($value)
+    public function __construct(String $value)
     {
         $this->setValue($value);
     }
 
     /**
-     * @param mixed $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      *
      * @throws DomainException
      */
-    private function setValue($value)
+    private function setValue(String $value)
     {
         $this->validateValue($value);
 
@@ -43,21 +45,29 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @param mixed $value
+     * @param \Gnoesiboe\ValueObjects\String\String $value
      *
      * @throws DomainException
      */
-    private function validateValue($value)
+    private function validateValue(String $value)
     {
-        $supported = array_values(self::extractConstants(get_called_class()));
+        $supportedValues = array_values(self::extractConstants(get_called_class()));
 
-        $this->throwDomainExceptionIf(in_array($value, $supported, true) === false, 'Value should be one of: ' . implode(', ', $supported));
+        foreach ($supportedValues as $supportedValue) {
+            /** @var \Gnoesiboe\ValueObjects\String\String $supportedValue */
+
+            if ($supportedValue->isEqualTo($value) === true) {
+                return;
+            }
+        }
+
+        throw new DomainException('Value not supported');
     }
 
     /**
-     * @return array
+     * @return array|\Gnoesiboe\ValueObjects\String\String[]
      */
-    public static function getSupported()
+    final public static function getSupported()
     {
         return self::extractConstants(get_called_class());
     }
@@ -85,7 +95,18 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
             $constants = $reflection->getConstants() + $constants;
         }
 
-        self::$constants[$class] = $constants;
+        $constants = array_map(function ($constant) {
+            if (is_string($constant) === true) {
+                return new String((string)$constant);
+            } elseif (filter_var($constant, FILTER_VALIDATE_INT) !== false) {
+                return new Integer($constant);
+            } else {
+                throw new \UnexpectedValueException('Type of constant not supported. Supported are integer and string, got: ' . var_export($constant, true));
+            }
+
+        }, $constants);
+
+        self::$constants[$class] = array_values($constants);
 
         return $constants;
     }
@@ -112,9 +133,9 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
     }
 
     /**
-     * @return mixed
+     * @return \Gnoesiboe\ValueObjects\String\String
      */
-    public function getValue()
+    final public function getValue()
     {
         return $this->value;
     }
@@ -122,8 +143,8 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
     /**
      * @return string
      */
-    public function __toString()
+    final public function __toString()
     {
-        return (string)$this->getValue();
+        return $this->value->getValue();
     }
 }
