@@ -42,4 +42,13 @@ final class YesNoMaybeTest extends \PHPUnit_Framework_TestCase
             }
         }
     }
+
+    public function testIsEqualToReturnsTrueOfTwoInstancesHaveTheSameValue()
+    {
+        $first = new YesNoMaybe(new String(YesNoMaybe::YES));
+        $second = new YesNoMaybe(new String(YesNoMaybe::YES));
+
+        $this->assertTrue($first->isEqualTo($second));
+        $this->assertTrue($second->isEqualTo($first));
+    }
 }

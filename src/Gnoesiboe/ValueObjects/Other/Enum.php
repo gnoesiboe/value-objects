@@ -147,4 +147,14 @@ abstract class Enum extends SingleValueObject implements ValueObjectInterface
     {
         return $this->value->getValue();
     }
+
+    /**
+     * @param Enum $enum
+     *
+     * @return bool
+     */
+    final public function isEqualTo(Enum $enum)
+    {
+        return $this->getValue()->isEqualTo($enum->getValue());
+    }
 }
