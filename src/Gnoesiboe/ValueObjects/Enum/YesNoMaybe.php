@@ -1,6 +1,8 @@
 <?php
 
-namespace Gnoesiboe\ValueObjects\Other;
+namespace Gnoesiboe\ValueObjects\Enum;
+
+use Gnoesiboe\ValueObjects\Other\Enum;
 
 /**
  * Class YesNoMaybe

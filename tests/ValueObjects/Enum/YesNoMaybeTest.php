@@ -1,10 +1,10 @@
 <?php
 
 
-namespace ValueObjects\Other;
+namespace ValueObjects\Enum;
 
 use Gnoesiboe\ValueObjects\Exception\DomainException;
-use Gnoesiboe\ValueObjects\Other\YesNoMaybe;
+use Gnoesiboe\ValueObjects\Enum\YesNoMaybe;
 use Gnoesiboe\ValueObjects\String\String;
 
 /**
